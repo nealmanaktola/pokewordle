@@ -1,0 +1,84 @@
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.key {
+  min-width: 43px;
+  height: 58px;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--key-bg);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.key:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.key:disabled {
+  cursor: not-allowed;
+}
+
+.key.wide {
+  min-width: 65px;
+  font-size: 0.75rem;
+}
+
+.key.correct {
+  background-color: var(--correct);
+  color: white;
+}
+
+.key.present {
+  background-color: var(--present);
+  color: white;
+}
+
+.key.absent {
+  background-color: var(--absent);
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .keyboard {
+    padding: 5px;
+    gap: 4px;
+  }
+
+  .keyboard-row {
+    gap: 4px;
+  }
+
+  .key {
+    min-width: calc((100vw - 60px) / 10);
+    height: 50px;
+    font-size: 0.8rem;
+  }
+
+  .key.wide {
+    min-width: calc((100vw - 60px) / 7);
+    font-size: 0.7rem;
+  }
+}

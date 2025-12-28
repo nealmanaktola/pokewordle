@@ -1,0 +1,34 @@
+.row {
+  display: flex;
+  gap: 5px;
+}
+
+.row.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+.row.bounce .tile .tile-inner {
+  animation: bounce 0.5s ease-in-out;
+  animation-delay: calc(var(--tile-index, 0) * 0.1s);
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: rotateX(180deg) translateY(0);
+  }
+  50% {
+    transform: rotateX(180deg) translateY(-20px);
+  }
+}

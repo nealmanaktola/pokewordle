@@ -1,0 +1,18 @@
+.footer {
+  padding: 16px;
+  text-align: center;
+  border-top: 1px solid var(--border-empty);
+  width: 100%;
+  max-width: 500px;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.footer .credit {
+  color: var(--primary);
+  font-weight: 600;
+}
