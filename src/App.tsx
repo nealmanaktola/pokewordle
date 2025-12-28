@@ -9,10 +9,12 @@ import { PokemonReveal } from './components/PokemonReveal';
 import { HelpModal } from './components/HelpModal';
 import { Footer } from './components/Footer';
 import { generateShareText, shareResult } from './utils/share';
+import type { GameMode } from './types';
 import './App.css';
 
 function App() {
-  const { state, handleKey } = useGame();
+  const [mode, setMode] = useState<GameMode>('daily');
+  const { state, handleKey, resetGame } = useGame(mode);
   const [showHelp, setShowHelp] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
@@ -56,19 +58,20 @@ function App() {
     const text = generateShareText(
       state.guesses,
       state.gameStatus === 'won',
-      state.currentRow
+      state.currentRow,
+      mode
     );
     const success = await shareResult(text);
     if (success) {
       setToast('Copied to clipboard!');
     }
-  }, [state.guesses, state.gameStatus, state.currentRow]);
+  }, [state.guesses, state.gameStatus, state.currentRow, mode]);
 
   const isInputDisabled = state.revealingRow !== null || state.gameStatus !== 'playing';
 
   return (
     <div className="app">
-      <Header onHelp={() => setShowHelp(true)} />
+      <Header onHelp={() => setShowHelp(true)} mode={mode} onModeChange={setMode} />
 
       <main className="game-container">
         <GameBoard
@@ -106,6 +109,11 @@ function App() {
           isVictory={state.gameStatus === 'won'}
           guessCount={state.currentRow}
           onShare={handleShare}
+          mode={mode}
+          onPlayAgain={() => {
+            resetGame();
+            setShowResult(false);
+          }}
         />
       </Modal>
     </div>

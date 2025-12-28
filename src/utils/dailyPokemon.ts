@@ -20,3 +20,8 @@ export function getTodayKey(): string {
   const today = new Date();
   return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
 }
+
+export function getRandomPokemon(): Pokemon {
+  const index = Math.floor(Math.random() * POKEMON_LIST.length);
+  return POKEMON_LIST[index];
+}

@@ -1,4 +1,4 @@
-import type { TileData } from '../types';
+import type { TileData, GameMode } from '../types';
 import { getPuzzleNumber } from './dailyPokemon';
 
 const EMOJI_MAP = {
@@ -11,9 +11,9 @@ const EMOJI_MAP = {
 export function generateShareText(
   guesses: TileData[][],
   won: boolean,
-  currentRow: number
+  currentRow: number,
+  mode: GameMode
 ): string {
-  const puzzleNumber = getPuzzleNumber();
   const attempts = won ? currentRow : 'X';
 
   const grid = guesses
@@ -21,6 +21,11 @@ export function generateShareText(
     .map(row => row.map(tile => EMOJI_MAP[tile.state]).join(''))
     .join('\n');
 
+  if (mode === 'unlimited') {
+    return `PokeWordle (Unlimited) ${attempts}/6\n\n${grid}`;
+  }
+
+  const puzzleNumber = getPuzzleNumber();
   return `PokeWordle #${puzzleNumber} ${attempts}/6\n\n${grid}`;
 }
 

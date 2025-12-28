@@ -1,3 +1,4 @@
+import type { GameMode } from '../types';
 import { getArtwork } from '../data/pokemon';
 import './PokemonReveal.css';
 
@@ -7,9 +8,11 @@ interface PokemonRevealProps {
   isVictory: boolean;
   guessCount: number;
   onShare: () => void;
+  mode: GameMode;
+  onPlayAgain: () => void;
 }
 
-export function PokemonReveal({ id, name, isVictory, guessCount, onShare }: PokemonRevealProps) {
+export function PokemonReveal({ id, name, isVictory, guessCount, onShare, mode, onPlayAgain }: PokemonRevealProps) {
   return (
     <div className="pokemon-reveal">
       <div className={`pokemon-image ${isVictory ? 'victory' : 'defeat'}`}>
@@ -28,9 +31,16 @@ export function PokemonReveal({ id, name, isVictory, guessCount, onShare }: Poke
         </p>
       )}
 
-      <button className="share-btn" onClick={onShare}>
-        Share Result
-      </button>
+      <div className="reveal-buttons">
+        <button className="share-btn" onClick={onShare}>
+          Share Result
+        </button>
+        {mode === 'unlimited' && (
+          <button className="play-again-btn" onClick={onPlayAgain}>
+            Play Again
+          </button>
+        )}
+      </div>
     </div>
   );
 }

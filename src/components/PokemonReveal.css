@@ -40,6 +40,11 @@
   margin: 0 0 20px 0;
 }
 
+.reveal-buttons {
+  display: flex;
+  gap: 12px;
+}
+
 .share-btn {
   background-color: var(--correct);
   color: white;
@@ -53,6 +58,22 @@
 }
 
 .share-btn:hover {
+  opacity: 0.9;
+}
+
+.play-again-btn {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.play-again-btn:hover {
   opacity: 0.9;
 }
 

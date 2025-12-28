@@ -1,5 +1,7 @@
 export type LetterState = 'correct' | 'present' | 'absent' | 'empty';
 
+export type GameMode = 'daily' | 'unlimited';
+
 export interface TileData {
   letter: string;
   state: LetterState;
@@ -25,4 +27,5 @@ export type GameAction =
   | { type: 'SUBMIT_GUESS' }
   | { type: 'SET_REVEALING'; row: number | null }
   | { type: 'SET_SHAKE'; row: number | null }
-  | { type: 'LOAD_STATE'; state: Partial<GameState> };
+  | { type: 'LOAD_STATE'; state: Partial<GameState> }
+  | { type: 'RESET_GAME'; pokemon: { id: number; name: string } };
