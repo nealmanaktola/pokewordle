@@ -21,7 +21,7 @@ export function generateShareText(
     .map(row => row.map(tile => EMOJI_MAP[tile.state]).join(''))
     .join('\n');
 
-  return `Pokedle #${puzzleNumber} ${attempts}/6\n\n${grid}`;
+  return `PokeWordle #${puzzleNumber} ${attempts}/6\n\n${grid}`;
 }
 
 export async function shareResult(text: string): Promise<boolean> {

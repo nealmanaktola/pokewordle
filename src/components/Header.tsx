@@ -10,7 +10,7 @@ export function Header({ onHelp }: HeaderProps) {
       <button className="header-btn" onClick={onHelp} aria-label="Help">
         ?
       </button>
-      <h1 className="title">Pokedle</h1>
+      <h1 className="title">PokeWordle</h1>
       <div className="header-spacer" />
     </header>
   );
