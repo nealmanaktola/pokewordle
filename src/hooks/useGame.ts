@@ -6,7 +6,6 @@ import { isValidWord } from '../data/words';
 import { POKEMON_LIST } from '../data/pokemon';
 
 const MAX_GUESSES = 6;
-const WORD_LENGTH = 5;
 
 function loadSavedState(): GameState | null {
   const todayKey = getTodayKey();
@@ -44,7 +43,7 @@ function createInitialState(mode: GameMode): GameState {
   return {
     solution: pokemon.name,
     solutionId: pokemon.id,
-    guesses: createInitialGuesses(),
+    guesses: createInitialGuesses(pokemon.name.length),
     currentGuess: '',
     currentRow: 0,
     gameStatus: 'playing',
@@ -58,7 +57,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
   switch (action.type) {
     case 'ADD_LETTER': {
       if (state.gameStatus !== 'playing') return state;
-      if (state.currentGuess.length >= WORD_LENGTH) return state;
+      if (state.currentGuess.length >= state.solution.length) return state;
       if (state.revealingRow !== null) return state;
 
       const newGuess = state.currentGuess + action.letter;
@@ -96,7 +95,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 
     case 'SUBMIT_GUESS': {
       if (state.gameStatus !== 'playing') return state;
-      if (state.currentGuess.length !== WORD_LENGTH) return state;
+      if (state.currentGuess.length !== state.solution.length) return state;
       if (state.revealingRow !== null) return state;
 
       const evaluation = evaluateGuess(state.currentGuess, state.solution);
@@ -144,7 +143,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
       return {
         solution: action.pokemon.name,
         solutionId: action.pokemon.id,
-        guesses: createInitialGuesses(),
+        guesses: createInitialGuesses(action.pokemon.name.length),
         currentGuess: '',
         currentRow: 0,
         gameStatus: 'playing',
@@ -221,11 +220,11 @@ export function useGame(mode: GameMode) {
 
   const handleKey = useCallback((key: string) => {
     if (key === 'ENTER') {
-      if (state.currentGuess.length !== WORD_LENGTH) {
+      if (state.currentGuess.length !== state.solution.length) {
         dispatch({ type: 'SET_SHAKE', row: state.currentRow });
         return 'Not enough letters';
       }
-      // Check if it's a valid word (real English word or Pokemon name)
+      // Check if it's a valid guess (Pokemon name or English word)
       const isPokemonName = POKEMON_LIST.some(p => p.name === state.currentGuess);
       if (!isPokemonName && !isValidWord(state.currentGuess)) {
         dispatch({ type: 'SET_SHAKE', row: state.currentRow });
@@ -238,7 +237,7 @@ export function useGame(mode: GameMode) {
       dispatch({ type: 'ADD_LETTER', letter: key });
     }
     return null;
-  }, [state.currentGuess.length, state.currentRow, state.currentGuess]);
+  }, [state.currentGuess.length, state.currentRow, state.currentGuess, state.solution.length]);
 
   const resetGame = useCallback(() => {
     const pokemon = getRandomPokemon();

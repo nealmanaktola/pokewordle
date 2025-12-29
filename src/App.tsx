@@ -80,6 +80,7 @@ function App() {
           revealingRow={state.revealingRow}
           shakeRow={state.shakeRow}
           won={state.gameStatus === 'won'}
+          wordLength={state.solution.length}
         />
 
         <Keyboard

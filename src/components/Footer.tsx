@@ -5,7 +5,7 @@ export function Footer() {
     <footer className="footer">
       <p>
         Built by <span className="credit">Claude</span> with some help from{' '}
-        <span className="credit">Ultrasound</span> & <span className="credit">6ix7even</span>
+        <span className="credit">Ultrasound</span> & <span className="credit">FlamingIce</span>
       </p>
     </footer>
   );

@@ -1,12 +1,13 @@
 import type { LetterState, TileData } from '../types';
 
 export function evaluateGuess(guess: string, solution: string): LetterState[] {
-  const result: LetterState[] = Array(5).fill('absent');
+  const length = solution.length;
+  const result: LetterState[] = Array(length).fill('absent');
   const solutionChars = solution.split('');
   const guessChars = guess.split('');
 
   // First pass: mark exact matches (green)
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < length; i++) {
     if (guessChars[i] === solutionChars[i]) {
       result[i] = 'correct';
       solutionChars[i] = '#'; // Mark as used
@@ -14,7 +15,7 @@ export function evaluateGuess(guess: string, solution: string): LetterState[] {
   }
 
   // Second pass: mark present (yellow) - only unused letters
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < length; i++) {
     if (result[i] !== 'correct') {
       const idx = solutionChars.indexOf(guessChars[i]);
       if (idx !== -1) {
@@ -27,12 +28,12 @@ export function evaluateGuess(guess: string, solution: string): LetterState[] {
   return result;
 }
 
-export function createEmptyRow(): TileData[] {
-  return Array(5).fill(null).map(() => ({ letter: '', state: 'empty' as LetterState }));
+export function createEmptyRow(length: number): TileData[] {
+  return Array(length).fill(null).map(() => ({ letter: '', state: 'empty' as LetterState }));
 }
 
-export function createInitialGuesses(): TileData[][] {
-  return Array(6).fill(null).map(() => createEmptyRow());
+export function createInitialGuesses(length: number): TileData[][] {
+  return Array(6).fill(null).map(() => createEmptyRow(length));
 }
 
 export function updateKeyboardState(
@@ -42,7 +43,7 @@ export function updateKeyboardState(
 ): Record<string, LetterState> {
   const newState = { ...currentState };
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < guess.length; i++) {
     const letter = guess[i];
     const letterState = evaluation[i];
     const existingState = newState[letter];

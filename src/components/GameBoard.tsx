@@ -8,11 +8,15 @@ interface GameBoardProps {
   revealingRow: number | null;
   shakeRow: number | null;
   won: boolean;
+  wordLength: number;
 }
 
-export function GameBoard({ guesses, currentRow, revealingRow, shakeRow, won }: GameBoardProps) {
+export function GameBoard({ guesses, currentRow, revealingRow, shakeRow, won, wordLength }: GameBoardProps) {
   return (
-    <div className="game-board">
+    <div
+      className="game-board"
+      style={{ '--word-length': wordLength } as React.CSSProperties}
+    >
       {guesses.map((tiles, index) => (
         <Row
           key={index}

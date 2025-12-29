@@ -1,6 +1,8 @@
 .tile {
-  width: 58px;
-  height: 58px;
+  /* Dynamic sizing based on word length - max 500px board width */
+  --tile-size: min(58px, calc((500px - (var(--word-length, 5) - 1) * 5px) / var(--word-length, 5)));
+  width: var(--tile-size);
+  height: var(--tile-size);
   perspective: 1000px;
 }
 
@@ -25,7 +27,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
+  /* Dynamic font size based on tile size */
+  font-size: clamp(0.8rem, calc(var(--tile-size, 58px) * 0.5), 2rem);
   font-weight: bold;
   text-transform: uppercase;
   backface-visibility: hidden;
@@ -82,12 +85,8 @@
 /* Responsive */
 @media (max-width: 480px) {
   .tile {
-    width: calc((100vw - 60px) / 5);
-    height: calc((100vw - 60px) / 5);
-  }
-
-  .tile-front,
-  .tile-back {
-    font-size: 1.5rem;
+    --tile-size: calc((100vw - 40px - (var(--word-length, 5) - 1) * 5px) / var(--word-length, 5));
+    width: var(--tile-size);
+    height: var(--tile-size);
   }
 }
